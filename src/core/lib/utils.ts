@@ -10,6 +10,12 @@ export const getErrorMsg: GetErrorMsg = (error) => {
   return message
 }
 
+export const formatDate = (date: string | Date) => {
+  let _date = typeof date === 'string' ? new Date(date) : date
+  const options = { day: '2-digit', month: 'short', year: 'numeric' }
+  return _date.toLocaleDateString('en-US', options)
+}
+
 export const showSnackbar = (
   err: string,
   options?: {

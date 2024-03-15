@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { showSnackbar } from '../lib/lib'
+import { showSnackbar } from '../lib/utils'
 import store from '../redux/store'
 
 type AjaxOptions = {

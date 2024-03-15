@@ -1,9 +1,27 @@
 import { createTheme } from '@mui/material/styles'
 
+const defaultTheme = createTheme()
+
 const theme = createTheme({
   typography: {
     fontFamily: 'Raleway, sans-serif',
-    h2: {}
+    h4: {
+      [defaultTheme.breakpoints.only('xs')]: {
+        fontSize: 24 // Font size for extra small screens
+      },
+      [defaultTheme.breakpoints.only('sm')]: {
+        fontSize: 28 // Font size for small screens
+      },
+      [defaultTheme.breakpoints.only('md')]: {
+        fontSize: 32 // Font size for medium screens
+      },
+      [defaultTheme.breakpoints.only('lg')]: {
+        fontSize: 36 // Font size for large screens
+      },
+      [defaultTheme.breakpoints.only('xl')]: {
+        fontSize: 40 // Font size for extra large screens
+      }
+    }
   },
   palette: {
     primary: {
@@ -47,6 +65,14 @@ const theme = createTheme({
     divider: '#E7EBEF'
   },
   components: {
+    MuiLink: {
+      styleOverrides: {
+        root: {
+          cursor: 'pointer',
+          fontFamily: 'Raleway, sans-serif'
+        }
+      }
+    },
     MuiAppBar: {
       styleOverrides: {
         root: {

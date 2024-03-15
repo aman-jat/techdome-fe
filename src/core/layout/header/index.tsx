@@ -3,7 +3,7 @@ import LightLogo from '../../../assets/logo-light.svg'
 import { useSelector } from 'react-redux'
 import { useState } from 'react'
 import api from '../../api'
-import { showSnackbar } from '../../lib/lib'
+import { showSnackbar } from '../../lib/utils'
 import Loader from '../../components/loader'
 import { useNavigate } from 'react-router-dom'
 
@@ -21,7 +21,7 @@ const Header = () => {
   }
 
   const handleViewLoans = (e) => {
-    //
+    navigate('/loans')
     handleClose()
   }
 
@@ -53,7 +53,7 @@ const Header = () => {
                 <Avatar>{user.name.charAt(0)}</Avatar>
               </IconButton>
               <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
-                <MenuItem onClick={handleViewLoans}>View loans</MenuItem>
+                <MenuItem onClick={handleViewLoans}>My loans</MenuItem>
                 <MenuItem onClick={handleLogout}>Logout</MenuItem>
               </Menu>
             </Stack>

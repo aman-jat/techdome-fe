@@ -10,7 +10,7 @@ const Login = () => {
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
   const formik = useFormik({
-    initialValues: { email: 'saif@gmail.com', password: '1234' },
+    initialValues: { email: '', password: '' },
     validationSchema: yup.object().shape({
       email: yup.string().email('Invalid email format').required('Email is required'),
       password: yup.string().trim().min(4)

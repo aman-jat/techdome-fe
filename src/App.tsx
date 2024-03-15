@@ -10,7 +10,7 @@ import { useAppSelector } from './core/redux/store'
 import { USER_ROLE } from './core/types/types'
 function App() {
   const user = useAppSelector((state) => state.user)
-  console.error('EVERYTHING IS GOOD IN APP')
+
   const { loading, error } = useAsync(() => {
     if (!user) {
       return api.auth.getMember()

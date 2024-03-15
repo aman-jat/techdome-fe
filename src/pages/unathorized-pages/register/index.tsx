@@ -1,7 +1,6 @@
 import { Stack, TextField, Button, Typography, CircularProgress, ToggleButtonGroup, ToggleButton } from '@mui/material'
 import * as yup from 'yup'
 import { useFormik } from 'formik'
-import { showSnackbar } from '../../../core/lib/utils'
 import api from '../../../core/api'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -22,11 +21,8 @@ const Register = () => {
       try {
         setLoading(true)
         await api.auth.register({ name, role, email, password })
-        showSnackbar('Registered successfully', { severity: 'success' })
         navigate('/')
-      } catch (error) {
-        console.error(error)
-        showSnackbar('Register Failed', { severity: 'error' })
+      } catch (e) {
       } finally {
         setLoading(false)
       }

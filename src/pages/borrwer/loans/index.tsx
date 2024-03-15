@@ -30,8 +30,9 @@ const Loans = () => {
   return (
     <Stack>
       <Stack alignSelf="center" width={{ xs: 350, sm: 500, md: 800, lg: 1000 }}>
-        {loans == null && loading && <Loader />}
-        {loans?.length ? (
+        {loans == null && loading ? (
+          <Loader />
+        ) : loans?.length ? (
           <table>
             <tr>
               <th>Amount</th>

@@ -35,7 +35,6 @@ const Header = () => {
     try {
       setLoading(true)
       await api.auth.logout()
-      showSnackbar('Logout successfully', { severity: 'success' })
       navigate('/')
     } catch (error) {
       console.error(error)

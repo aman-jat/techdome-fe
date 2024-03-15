@@ -1,13 +1,14 @@
 import { Snackbar } from '@mui/material'
 import { Alert } from '@mui/material'
-import { useAppDispatch, useAppSelector } from '../redux/store'
+import store, { useAppSelector } from '../redux/store'
 
 const SnackMessage = () => {
-  const snackProps = useAppSelector((state) => state.ui.snackbar)
-  const dispatch = useAppDispatch()
+  const snackProps = useAppSelector((state) => state.snackbar)
+
   const snackClose = () => {
-    dispatch({ type: 'ui/snackbar', payload: null })
+    store.dispatch({ type: 'snackbar/insert', payload: null })
   }
+  const message = snackProps?.message === 'undefined: Unknown error' ? 'Server is offline' : snackProps?.message
   return (
     <>
       {!!snackProps && (
@@ -15,10 +16,14 @@ const SnackMessage = () => {
           open={true}
           autoHideDuration={6000}
           onClose={snackClose}
-          anchorOrigin={snackProps?.anchorOrigin || { vertical: 'bottom', horizontal: 'left' }}
+          anchorOrigin={snackProps?.anchorOrigin || { vertical: 'top', horizontal: 'right' }}
         >
-          <Alert onClose={snackClose} severity={snackProps?.severity || 'error'} sx={{ width: '100%' }}>
-            {snackProps?.message || ''}
+          <Alert
+            onClose={snackClose}
+            severity={snackProps?.severity || 'error'}
+            sx={{ width: '100%', fontWeight: 500, fontSize: 16 }}
+          >
+            {message ?? ''}
           </Alert>
         </Snackbar>
       )}

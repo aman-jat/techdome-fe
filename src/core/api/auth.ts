@@ -28,7 +28,7 @@ const auth = {
     win.location.reload()
   },
   getMember: async () => {
-    return await ajax('member/me', { dispatch: 'user/insert' })
+    return await ajax('member/me', { dispatch: 'user/insert', showError: false })
   }
 }
 

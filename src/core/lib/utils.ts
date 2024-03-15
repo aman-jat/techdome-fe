@@ -22,7 +22,7 @@ export const showSnackbar = (
   }
 ) => {
   store.dispatch({
-    type: 'ui/snackbar',
+    type: 'snackbar/insert',
     payload: {
       message: getErrorMsg(err),
       ...(options ?? {})

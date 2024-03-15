@@ -10,10 +10,7 @@ const reducer = combineReducers({
     stateType: 'list',
     initialState: null
   }),
-  ui: combineReducers({
-    snackbar: reducerBuilder('ui/snackbar', { stateType: 'static' }),
-    state: reducerBuilder('ui/state', { stateType: 'map', keyName: 'name' })
-  })
+  snackbar: reducerBuilder('snackbar', { stateType: 'static' })
 })
 
 const store = configureStore({
@@ -24,7 +21,7 @@ const store = configureStore({
 export type RootState = {
   user: User
   loans: Loan[] | null
-  ui: any
+  snackbar: any
 }
 export type AppDispatch = typeof store.dispatch
 

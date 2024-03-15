@@ -1,7 +1,6 @@
 import { TextField, Button, Typography, CircularProgress } from '@mui/material'
 import * as yup from 'yup'
 import { useFormik } from 'formik'
-import { showSnackbar } from '../../../core/lib/utils'
 import api from '../../../core/api'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -10,7 +9,7 @@ const Login = () => {
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
   const formik = useFormik({
-    initialValues: { email: '', password: '' },
+    initialValues: { email: 'saif@gmail.com', password: '1234' },
     validationSchema: yup.object().shape({
       email: yup.string().email('Invalid email format').required('Email is required'),
       password: yup.string().trim().min(4)
@@ -19,11 +18,8 @@ const Login = () => {
       try {
         setLoading(true)
         await api.auth.login({ email, password })
-        showSnackbar('Login Successfull', { severity: 'info' })
         navigate('/')
-      } catch (error) {
-        console.error(error)
-        showSnackbar('Login Failed', { severity: 'error' })
+      } catch (e) {
       } finally {
         setLoading(false)
       }

@@ -39,15 +39,10 @@ const ajax = async function (
     if (dispatch) setTimeout(() => store.dispatch({ type: `${dispatch}`, payload: resp }), 0)
     return resp
   } catch (e: any) {
-    if (dispatch)
-      store.dispatch({
-        type: 'ui/401',
-        payload: { path, type: dispatch, method }
-      })
-    const status = e.response?.status
+    // const status = e.response?.status
     const message = e.response?.data?.message || e.response?.data?.error || 'Unknown error'
     if (showError) showSnackbar(message, { severity: 'error' })
-    throw new Error(`${status}: ${message}`)
+    throw new Error(message)
   }
 }
 export default ajax

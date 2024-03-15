@@ -4,8 +4,8 @@ import { useSelector } from 'react-redux'
 import Loader from './core/components/loader'
 import { useAsync } from 'react-use'
 import { USER_ROLE } from './core/constants/constants'
-import UnauthorizedRoutes from './core/routes/unauthorized-routes'
-import BorrowerRoutes from './core/routes/borrower-routes'
+import UnauthorizedPage from './pages/unathorized-pages'
+import BorrowerRoutes from './pages/borrwer'
 function App() {
   const user = useSelector((state: any) => state?.user)
 
@@ -20,7 +20,6 @@ function App() {
   return (
     <Suspense fallback={<Loader />}>
       {loading && <Loader />}
-      {!loading && !user && <UnauthorizedRoutes />}
       {!loading && !error && user && user.role === USER_ROLE.BORROWER && <BorrowerRoutes />}
       {!loading && !error && user && user.role === USER_ROLE.LENDER && (
         <>
@@ -29,6 +28,7 @@ function App() {
           <div>NO ROUTES</div>
         </>
       )}
+      {!loading && !user && <UnauthorizedPage />}
     </Suspense>
   )
 }

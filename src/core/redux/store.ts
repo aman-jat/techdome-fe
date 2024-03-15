@@ -7,6 +7,10 @@ const reducer = combineReducers({
   loans: reducerBuilder('loans', {
     stateType: 'list',
     initialState: null
+  }),
+  ui: combineReducers({
+    snackbar: reducerBuilder('ui/snackbar', { stateType: 'static' }),
+    state: reducerBuilder('ui/state', { stateType: 'map', keyName: 'name' })
   })
 })
 

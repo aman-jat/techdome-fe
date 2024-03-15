@@ -6,7 +6,14 @@ const auth = {
     return await ajax('auth/login', {
       method: 'POST',
       data: payload,
-      dispatch: 'auth/insert'
+      dispatch: 'user/insert'
+    })
+  },
+  register: async (payload: { name: string; role: string; email: string; password: string }) => {
+    return await ajax('auth/register', {
+      method: 'POST',
+      data: payload,
+      dispatch: 'user/insert'
     })
   },
   logout: async () => {
@@ -14,10 +21,7 @@ const auth = {
     ;['user', 'loans'].forEach((type) => {
       store.dispatch({ type: `${type}/clear` })
     })
-    document.cookie = '_subdomain' + '='
     await ajax('auth/logout', { dispatch: 'user/clear' })
-    win.location.href = '/'
-    win.location.reload()
   },
   getMember: async () => {
     return await ajax('member/me', { dispatch: 'user/insert' })

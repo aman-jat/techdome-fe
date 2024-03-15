@@ -1,10 +1,10 @@
 import { Snackbar } from '@mui/material'
 import { Alert } from '@mui/material'
-import { useDispatch, useSelector } from 'react-redux'
+import { useAppDispatch, useAppSelector } from '../redux/store'
 
 const SnackMessage = () => {
-  const snackProps = useSelector((state: any) => state.ui?.snackbar)
-  const dispatch = useDispatch()
+  const snackProps = useAppSelector((state) => state.ui.snackbar)
+  const dispatch = useAppDispatch()
   const snackClose = () => {
     dispatch({ type: 'ui/snackbar', payload: null })
   }

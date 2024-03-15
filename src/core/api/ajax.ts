@@ -13,23 +13,28 @@ type AjaxOptions = {
 
 const ajax = async function (
   path: string,
-  { dispatch, method = 'GET', data = null, prefix = '/api/', headers = {}, showError = true }: AjaxOptions
+  { dispatch, method = 'GET', data = null, showError = true }: AjaxOptions
 ): Promise<any> {
   try {
-    let config = {
+    const config = {
       method,
-      url: `${prefix}${path}`,
-      headers: { 'Content-Type': 'application/json', ...headers },
+      url: `${import.meta.env.VITE_SERVER_BASE_URL}/api/${path}`,
+      headers: { 'Content-Type': 'application/json', Authorization: localStorage.getItem('token') },
       params: undefined,
-      data: undefined
+      data: undefined,
+      withCredentials: true
     }
+
     if (data && Object.keys(data).length > 0) {
       if (method === 'GET') config.params = data
       else config.data = data
     }
-    let resp = await axios(config)
-
+    let resp: any = await axios(config)
     resp = resp.data
+    if (resp.hasOwnProperty('token')) {
+      localStorage.setItem('token', resp.token)
+      resp = resp.member
+    }
     if (dispatch) setTimeout(() => store.dispatch({ type: `${dispatch}`, payload: resp }), 0)
     return resp
   } catch (e: any) {
@@ -38,8 +43,8 @@ const ajax = async function (
         type: 'ui/401',
         payload: { path, type: dispatch, method }
       })
-    let status = e.response?.status
-    let message = e.response?.data?.message || e.response?.data?.error || 'Unknown error'
+    const status = e.response?.status
+    const message = e.response?.data?.message || e.response?.data?.error || 'Unknown error'
     if (showError) showSnackbar(message, { severity: 'error' })
     throw new Error(`${status}: ${message}`)
   }

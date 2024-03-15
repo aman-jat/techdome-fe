@@ -1,13 +1,13 @@
 import { Button, Stack } from '@mui/material'
 import { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
 import api from '../../../core/api'
 import { showSnackbar } from '../../../core/lib/utils'
 import Loader from '../../../core/components/loader'
 import { useNavigate } from 'react-router-dom'
+import { useAppSelector } from '../../../core/redux/store'
 
 const Loans = () => {
-  const loans = useSelector((state: any) => state?.loans)
+  const loans = useAppSelector((state) => state.loans)
 
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
@@ -23,11 +23,14 @@ const Loans = () => {
           setLoading(false)
         })
     }
-  }, [])
+  }, [loans])
+
+  const reversedLoans = loans?.length ? [...loans].reverse() : []
+
   return (
     <Stack>
       <Stack alignSelf="center" width={{ xs: 400, sm: 500, md: 800, lg: 1000 }}>
-        {loading && <Loader />}
+        {loans == null && loading && <Loader />}
         <table>
           <tr>
             {/* <th>Id</th> */}
@@ -37,7 +40,7 @@ const Loans = () => {
             <th>Status</th>
             <th>Action</th>
           </tr>
-          {loans?.toReversed().map((loan) => {
+          {reversedLoans.map((loan) => {
             return (
               <tr key={loan.id}>
                 {/* <td>{loan.id}</td> */}

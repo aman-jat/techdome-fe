@@ -17,20 +17,22 @@ import * as yup from 'yup'
 import { showSnackbar } from '../../../core/lib/utils'
 import api from '../../../core/api'
 import { CelebrationRounded } from '@mui/icons-material'
+import { Loan } from '../../../core/types/types'
 
-const PaymentDialog = ({ loan, close }) => {
+const PaymentDialog = ({ loan, close }: { loan: Loan; close: () => void }) => {
   const [loading, setLoading] = useState(false)
   const [isDone, setIsDone] = useState(false)
 
-  const nextPayment = loan.repayments.find((r) => r.status === 'PENDING')
+  const nextPaymentRemainingAmount = loan.repayments.find((r) => r.status === 'PENDING')?.remainingAmount ?? 0
+  const loanTotalRemainingAmount = loan.totalRemainingAmount ?? 0
 
   const formik = useFormik({
     initialValues: { amount: 0 },
     validationSchema: yup.object().shape({
       amount: yup
         .number()
-        .min(nextPayment.remainingAmount, `Amount can not be less than ${nextPayment.remainingAmount}`)
-        .max(loan.totalRemainingAmount, `Amount can not be greater than ${loan.totalRemainingAmount}`)
+        .min(nextPaymentRemainingAmount, `Amount can not be less than ${nextPaymentRemainingAmount}`)
+        .max(loanTotalRemainingAmount, `Amount can not be greater than ${loanTotalRemainingAmount}`)
     }),
     onSubmit: async ({ amount }) => {
       try {
@@ -79,7 +81,7 @@ const PaymentDialog = ({ loan, close }) => {
               fullWidth
             />
             <FormHelperText>
-              Enter any amount beween {nextPayment.remainingAmount} and {loan.totalRemainingAmount}
+              Enter any amount beween {nextPaymentRemainingAmount} and {loanTotalRemainingAmount}
             </FormHelperText>
           </>
         )}

@@ -1,16 +1,16 @@
 import { Suspense } from 'react'
 import api from './core/api'
-import { useSelector } from 'react-redux'
 import Loader from './core/components/loader'
 import { useAsync } from 'react-use'
-import { USER_ROLE } from './core/constants/constants'
 import UnauthorizedPage from './pages/unathorized-pages'
 import BorrowerRoutes from './pages/borrwer'
 import Layout from './core/layout'
 import LenderRoutes from './pages/lender'
+import { useAppSelector } from './core/redux/store'
+import { USER_ROLE } from './core/types/types'
 function App() {
-  const user = useSelector((state: any) => state?.user)
-
+  const user = useAppSelector((state) => state.user)
+  console.error('EVERYTHING IS GOOD IN APP')
   const { loading, error } = useAsync(() => {
     if (!user) {
       return api.auth.getMember()

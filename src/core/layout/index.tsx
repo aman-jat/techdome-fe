@@ -3,7 +3,6 @@ import Header from './header'
 import Footer from './footer'
 
 import { Stack } from '@mui/material'
-import { useSelector } from 'react-redux'
 
 const Layout = ({ children }: { children: ReactNode }) => {
   return (

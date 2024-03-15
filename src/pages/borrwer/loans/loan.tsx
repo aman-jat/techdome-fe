@@ -1,16 +1,16 @@
 import { Button, CircularProgress, Grid, Stack, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
 import api from '../../../core/api'
 import { formatDate, showSnackbar } from '../../../core/lib/utils'
 import Loader from '../../../core/components/loader'
 import { useParams } from 'react-router-dom'
 import PaymentDialog from './payment-dailog'
-import { USER_ROLE } from '../../../core/constants/constants'
+import { useAppSelector } from '../../../core/redux/store'
+import { USER_ROLE } from '../../../core/types/types'
 
 const Loan = () => {
-  const loans = useSelector((state: any) => state?.loans)
-  const user = useSelector((state: any) => state?.user)
+  const loans = useAppSelector((state) => state.loans)
+  const user = useAppSelector((state) => state?.user)
 
   const [loading, setLoading] = useState(false)
   const [aprvLoading, setAprvLoading] = useState(false)
@@ -18,14 +18,14 @@ const Loan = () => {
   const [paymentDialogVisibility, setPaymentDialogVisibility] = useState(false)
 
   const { id } = useParams()
-  const loan = loans?.find((l) => l.id === +id)
+
   useEffect(() => {
     if (loans == null) {
       setLoading(true)
       api.loan
         .getAll()
         .then()
-        .catch((err) => showSnackbar('Something went wrong', { severity: 'error' }))
+        .catch(() => showSnackbar('Something went wrong', { severity: 'error' }))
         .finally(() => {
           setLoading(false)
         })
@@ -38,11 +38,13 @@ const Loan = () => {
     return <Loader />
   }
 
+  const loan = id && loans?.find((l) => l.id === +id)
+
   if (!loan) {
     return <>404-Invalid Id</>
   }
 
-  const Row = ({ label, value }) => {
+  const Row = ({ label, value }: { label: string; value: number | string | null }) => {
     return (
       <tr>
         <th style={{ padding: '10px', textAlign: 'start', border: '1px solid #00000030' }}>{label}</th>
@@ -78,11 +80,11 @@ const Loan = () => {
     data.push(
       {
         key: 'Amount + Interst',
-        value: loan.totalPayableAmount
+        value: loan.totalPayableAmount as number
       },
       {
         key: 'Remaining Amount',
-        value: loan.totalRemainingAmount
+        value: loan.totalRemainingAmount as number
       }
     )
   }
@@ -117,7 +119,7 @@ const Loan = () => {
                 return <Row key={d.key} label={d.key} value={d.value} />
               })}
             </table>
-            {loan.status === 'APPROVED' && user.status === USER_ROLE.BORROWER && (
+            {loan.status === 'APPROVED' && user.role === USER_ROLE.BORROWER && (
               <Button sx={{ width: '200px', alignSelf: 'center' }} onClick={openPaymentDialog} variant="contained">
                 Make a Payment
               </Button>

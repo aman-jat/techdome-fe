@@ -84,12 +84,7 @@ const ApplyForLoan = () => {
                 label="Tenure"
                 placeholder="Tenure"
               />
-              <Button
-                disabled={loading}
-                endIcon={loading && <CircularProgress size={20} />}
-                variant="outlined"
-                onClick={calculateRepayments}
-              >
+              <Button disabled={loading} variant="outlined" onClick={calculateRepayments}>
                 CALCULATE EMIs
               </Button>
               <Button

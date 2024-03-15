@@ -1,4 +1,4 @@
-import { ListItem, Stack, Typography } from '@mui/material'
+import { Stack, Typography } from '@mui/material'
 import LightLogo from '../../../assets/logo-light.svg'
 
 const Header = () => {

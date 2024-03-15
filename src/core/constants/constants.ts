@@ -1,4 +1,0 @@
-export enum USER_ROLE {
-  LENDER = 'LENDER',
-  BORROWER = 'BORROWER'
-}

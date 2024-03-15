@@ -5,8 +5,9 @@
   "type": "module",
   "author": "Aman Jat",
   "scripts": {
-    "dev": "vite",
-    "dev:local": "vite --mode noproxy",
+    "start": "vite",
+    "prod": "vite --mode production",
+    "dev": "vite --mode development",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
@@ -27,6 +28,7 @@
     "react-use": "^17.5.0",
     "redux": "^5.0.1",
     "riducers": "^1.1.2",
+    "vite": "^5.1.6",
     "yup": "^1.4.0"
   },
   "devDependencies": {

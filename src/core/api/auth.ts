@@ -22,6 +22,9 @@ const auth = {
       store.dispatch({ type: `${type}/clear` })
     })
     await ajax('auth/logout', { dispatch: 'user/clear' })
+    win.localStorage.removeItem('token')
+    win.location.href = '/'
+    win.location.reload()
   },
   getMember: async () => {
     return await ajax('member/me', { dispatch: 'user/insert' })

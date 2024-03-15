@@ -1,15 +1,15 @@
 import { AppBar, Avatar, IconButton, Menu, MenuItem, Stack, Toolbar, Typography } from '@mui/material'
 import LightLogo from '../../../assets/logo-light.svg'
-import { useSelector } from 'react-redux'
 import { useState } from 'react'
 import api from '../../api'
 import { showSnackbar } from '../../lib/utils'
 import Loader from '../../components/loader'
 import { useNavigate } from 'react-router-dom'
+import { useAppSelector } from '../../redux/store'
 
 const Header = () => {
   const navigate = useNavigate()
-  const user = useSelector((state: any) => state?.user)
+  const user = useAppSelector((state) => state.user)
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const [loading, setLoading] = useState(false)
   const open = Boolean(anchorEl)
@@ -20,7 +20,7 @@ const Header = () => {
     setAnchorEl(null)
   }
 
-  const handleViewLoans = (e) => {
+  const handleViewLoans = () => {
     navigate('loans')
     handleClose()
   }

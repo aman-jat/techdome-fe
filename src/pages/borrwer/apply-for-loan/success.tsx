@@ -1,5 +1,5 @@
 import { CelebrationRounded } from '@mui/icons-material'
-import { Button, Link, Stack, Typography } from '@mui/material'
+import { Link, Stack, Typography } from '@mui/material'
 
 const SuccessfullyApplied = () => {
   return (

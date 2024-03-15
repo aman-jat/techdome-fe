@@ -5,7 +5,7 @@ import { showSnackbar } from '../../../core/lib/utils'
 import api from '../../../core/api'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { USER_ROLE } from '../../../core/constants/constants'
+import { USER_ROLE } from '../../../core/types/types'
 
 const Register = () => {
   const [loading, setLoading] = useState(false)

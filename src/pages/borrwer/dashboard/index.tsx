@@ -1,12 +1,12 @@
 import { Button, Grid, Stack, Typography } from '@mui/material'
-import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { ArrowCircleRightRounded } from '@mui/icons-material'
-import { USER_ROLE } from '../../../core/constants/constants'
 import img from '../../../assets/makeItHappen.png'
+import { useAppSelector } from '../../../core/redux/store'
+import { USER_ROLE } from '../../../core/types/types'
 
 const Dashboard = () => {
-  const user = useSelector((state: any) => state?.user)
+  const user = useAppSelector((state) => state.user)
   const navigate = useNavigate()
 
   return (

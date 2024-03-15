@@ -21,7 +21,7 @@ const Header = () => {
   }
 
   const handleViewLoans = (e) => {
-    navigate('/loans')
+    navigate('loans')
     handleClose()
   }
 
@@ -45,7 +45,7 @@ const Header = () => {
       <Toolbar variant="dense">
         {loading && <Loader />}
         <Stack p={2} width="100%" direction="row" justifyContent="space-between">
-          <img src={LightLogo} width={100}></img>
+          <img onClick={() => navigate('/')} style={{ cursor: 'pointer' }} src={LightLogo} width={100}></img>
           {user && (
             <Stack alignItems="center" direction="row" gap={2}>
               <Typography color="white">{user.role}</Typography>

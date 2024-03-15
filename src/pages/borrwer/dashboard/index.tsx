@@ -8,9 +8,6 @@ const Dashboard = () => {
 
   const navigate = useNavigate()
 
-  const navigateToApply = () => {
-    navigate('/apply')
-  }
   return (
     <Stack px={4} py={8} alignSelf="center" width={{ md: 800, lg: 1000 }}>
       <Grid container>
@@ -22,9 +19,20 @@ const Dashboard = () => {
           </Stack>
         </Grid>
         <Grid item sm={6} lg={6}>
-          <Stack px={{ lg: 2 }} height="100%" justifyContent="center">
-            <Button onClick={navigateToApply} endIcon={<ArrowCircleRightRounded />}>
+          <Stack px={{ lg: 8 }} height="100%" justifyContent="center">
+            <Button
+              sx={{ width: 'fit-content' }}
+              onClick={() => navigate('/apply')}
+              endIcon={<ArrowCircleRightRounded />}
+            >
               Apply for loan, Now
+            </Button>
+            <Button
+              sx={{ width: 'fit-content' }}
+              onClick={() => navigate('/loans')}
+              endIcon={<ArrowCircleRightRounded />}
+            >
+              View my loans
             </Button>
           </Stack>
         </Grid>

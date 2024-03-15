@@ -81,21 +81,7 @@ const theme = createTheme({
       }
     },
     MuiButton: {
-      styleOverrides: {
-        root: {
-          fontWeight: 600,
-          letterSpacing: 0,
-          textTransform: 'initial'
-        },
-        sizeSmall: {
-          padding: '0 8px',
-          height: '32px'
-        },
-        text: {
-          fontSize: 16,
-          color: '#28407D'
-        }
-      }
+      styleOverrides: {}
     }
   }
 })

@@ -10,6 +10,13 @@ const auth = {
       data: payload,
       dispatch: 'loans/insert'
     })
+  },
+  repay: async (payload: { amount: number; id: number }) => {
+    return await ajax(`loan/${payload.id}/repay`, {
+      method: 'PUT',
+      data: payload,
+      dispatch: 'loans/insert'
+    })
   }
 }
 

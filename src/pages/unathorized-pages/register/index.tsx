@@ -25,7 +25,7 @@ const Register = () => {
         showSnackbar('Registered successfully', { severity: 'success' })
         navigate('/')
       } catch (error) {
-        console.log('error', error)
+        console.error(error)
         showSnackbar('Register Failed', { severity: 'error' })
       } finally {
         setLoading(false)

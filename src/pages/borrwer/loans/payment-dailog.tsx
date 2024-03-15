@@ -39,7 +39,7 @@ const PaymentDialog = ({ loan, close }) => {
         showSnackbar('Payment Successfull', { severity: 'info' })
         setIsDone(true)
       } catch (error) {
-        console.log('error', error)
+        console.error(error)
         showSnackbar('Login Failed', { severity: 'error' })
       } finally {
         setLoading(false)

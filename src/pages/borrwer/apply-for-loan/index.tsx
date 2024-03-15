@@ -11,7 +11,7 @@ const ApplyForLoan = () => {
   const [repayments, setRepayments] = useState<{ id: number; emiAmount: number; due_date: Date }[]>([])
   const navigate = useNavigate()
   const formik = useFormik({
-    initialValues: { amount: 1000, tenure: 4 },
+    initialValues: { amount: 0, tenure: 0 },
     validationSchema: yup.object().shape({
       amount: yup.number().min(1, 'Amount can not be less than 1').required('Loan amount is required'),
       tenure: yup.number().min(1, 'Tenure can not be less than 1').required('Tenure is required')
@@ -23,7 +23,7 @@ const ApplyForLoan = () => {
         showSnackbar('Applied Successfully', { severity: 'info' })
         navigate('/success')
       } catch (error) {
-        console.log('error', error)
+        console.error(error)
         showSnackbar('Something went wrong', { severity: 'error' })
       } finally {
         setLoading(false)

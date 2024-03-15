@@ -32,7 +32,7 @@ const Header = () => {
       showSnackbar('Logout successfully', { severity: 'success' })
       navigate('/')
     } catch (error) {
-      console.log('error', error)
+      console.error(error)
       showSnackbar('Logout Failed', { severity: 'error' })
     } finally {
       setLoading(false)

@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom'
 
 const Loans = () => {
   const loans = useSelector((state: any) => state?.loans)
+
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
 
@@ -17,7 +18,7 @@ const Loans = () => {
       api.loan
         .getAll()
         .then()
-        .catch((err) => showSnackbar('Something went wrong', { severity: 'error' }))
+        .catch(() => showSnackbar('Something went wrong', { severity: 'error' }))
         .finally(() => {
           setLoading(false)
         })
@@ -44,7 +45,7 @@ const Loans = () => {
                 <td>{loan.interestRate}</td>
                 <td>{loan.tenure}</td>
                 <td>{loan.status}</td>
-                <td>
+                <td style={{}}>
                   <Button onClick={() => navigate(`/loans/${loan.id}`)} variant="text">
                     View
                   </Button>

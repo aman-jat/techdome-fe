@@ -17,6 +17,13 @@ const auth = {
       data: payload,
       dispatch: 'loans/insert'
     })
+  },
+  approve: async (payload: { amount: number; id: number }) => {
+    return await ajax(`loan/${payload.id}/approve`, {
+      method: 'PUT',
+      data: payload,
+      dispatch: 'loans/insert'
+    })
   }
 }
 

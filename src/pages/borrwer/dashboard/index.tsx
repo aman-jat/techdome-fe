@@ -2,10 +2,10 @@ import { Button, Grid, Stack, Typography } from '@mui/material'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { ArrowCircleRightRounded } from '@mui/icons-material'
+import { USER_ROLE } from '../../../core/constants/constants'
 
 const Dashboard = () => {
   const user = useSelector((state: any) => state?.user)
-
   const navigate = useNavigate()
 
   return (
@@ -20,19 +20,22 @@ const Dashboard = () => {
         </Grid>
         <Grid item sm={6} lg={6}>
           <Stack px={{ lg: 8 }} height="100%" justifyContent="center">
-            <Button
-              sx={{ width: 'fit-content' }}
-              onClick={() => navigate('/apply')}
-              endIcon={<ArrowCircleRightRounded />}
-            >
-              Apply for loan, Now
-            </Button>
+            {user.role === USER_ROLE.BORROWER && (
+              <Button
+                sx={{ width: 'fit-content' }}
+                onClick={() => navigate('/apply')}
+                endIcon={<ArrowCircleRightRounded />}
+              >
+                Apply for loan, Now
+              </Button>
+            )}
+
             <Button
               sx={{ width: 'fit-content' }}
               onClick={() => navigate('/loans')}
               endIcon={<ArrowCircleRightRounded />}
             >
-              View my loans
+              {user.role === USER_ROLE.BORROWER ? 'View my loans' : 'View  applied loans'}
             </Button>
           </Stack>
         </Grid>

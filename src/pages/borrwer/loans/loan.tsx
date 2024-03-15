@@ -1,4 +1,4 @@
-import { Button, Grid, Stack, Typography } from '@mui/material'
+import { Button, CircularProgress, Grid, Stack, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import api from '../../../core/api'
@@ -6,10 +6,15 @@ import { formatDate, showSnackbar } from '../../../core/lib/utils'
 import Loader from '../../../core/components/loader'
 import { useParams } from 'react-router-dom'
 import PaymentDialog from './payment-dailog'
+import { USER_ROLE } from '../../../core/constants/constants'
 
 const Loan = () => {
   const loans = useSelector((state: any) => state?.loans)
+  const user = useSelector((state: any) => state?.user)
+
   const [loading, setLoading] = useState(false)
+  const [aprvLoading, setAprvLoading] = useState(false)
+
   const [paymentDialogVisibility, setPaymentDialogVisibility] = useState(false)
 
   const { id } = useParams()
@@ -85,6 +90,19 @@ const Loan = () => {
   const openPaymentDialog = () => {
     setPaymentDialogVisibility(true)
   }
+
+  const handleLoanApprove = async () => {
+    try {
+      setAprvLoading(true)
+      await api.loan.approve({ id: loan.id })
+      showSnackbar('Loan Approved', { severity: 'info' })
+    } catch {
+      showSnackbar('Something went wrong', { severity: 'error' })
+    } finally {
+      setAprvLoading(false)
+    }
+  }
+
   return (
     <Stack px={4} py={8} alignSelf="center" width={{ xs: '100%', lg: 1000 }}>
       <Grid container>
@@ -99,20 +117,35 @@ const Loan = () => {
                 return <Row key={d.key} label={d.key} value={d.value} />
               })}
             </table>
-            {loan.status === 'APPROVED' && (
+            {loan.status === 'APPROVED' && user.status === USER_ROLE.BORROWER && (
               <Button sx={{ width: '200px', alignSelf: 'center' }} onClick={openPaymentDialog} variant="contained">
                 Make a Payment
               </Button>
             )}
+            {user.role === USER_ROLE.LENDER && loan.status === 'PENDING' && (
+              <Button
+                disabled={aprvLoading}
+                endIcon={aprvLoading && <CircularProgress size={20} />}
+                sx={{ width: '200px', alignSelf: 'center' }}
+                onClick={handleLoanApprove}
+                variant="contained"
+              >
+                Approve
+              </Button>
+            )}
           </Stack>
         </Grid>
+
         <Grid item xs={12} sm={6} lg={6}>
           <Stack px={{ sm: 2, md: 8, lg: 8 }} height="100%" justifyContent="center">
             <Typography variant="h4">EMIs</Typography>
-            <Typography color="grey" fontSize={12}>
-              Please note: The date of the EMI is an estimated date if your loan is approved today. The actual date of
-              the EMI will be calculated from the approval date.
-            </Typography>
+            {loan.status === 'PENDING' && user.role === USER_ROLE.BORROWER && (
+              <Typography color="grey" fontSize={12}>
+                Please note: The date of the EMI is an estimated date if your loan is approved today. The actual date of
+                the EMI will be calculated from the approval date.
+              </Typography>
+            )}
+
             <Stack py={2} px={{ md: 2, lg: 2 }} gap={2}>
               {!loan.repayments.length && <Typography>Kindly await approval to access further details. </Typography>}
               {loan.repayments.map((r, i) => {

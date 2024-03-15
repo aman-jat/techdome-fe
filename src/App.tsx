@@ -7,6 +7,7 @@ import { USER_ROLE } from './core/constants/constants'
 import UnauthorizedPage from './pages/unathorized-pages'
 import BorrowerRoutes from './pages/borrwer'
 import Layout from './core/layout'
+import LenderRoutes from './pages/lender'
 function App() {
   const user = useSelector((state: any) => state?.user)
 
@@ -23,13 +24,7 @@ function App() {
       {loading && <Loader />}
       <Layout>
         {!loading && !error && user && user.role === USER_ROLE.BORROWER && <BorrowerRoutes />}
-        {!loading && !error && user && user.role === USER_ROLE.LENDER && (
-          <>
-            {/* no routes  */}
-            {/* <AuthorizedLenderRoutes /> */}
-            <div>NO ROUTES</div>
-          </>
-        )}
+        {!loading && !error && user && user.role === USER_ROLE.LENDER && <LenderRoutes />}
         {!loading && !user && <UnauthorizedPage />}
       </Layout>
     </Suspense>

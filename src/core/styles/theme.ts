@@ -5,6 +5,16 @@ const defaultTheme = createTheme()
 const theme = createTheme({
   typography: {
     fontFamily: 'Raleway, sans-serif',
+    body1: {
+      [defaultTheme.breakpoints.only('xs')]: {
+        fontSize: 18
+      }
+    },
+    h3: {
+      [defaultTheme.breakpoints.only('xs')]: {
+        fontSize: 30
+      }
+    },
     h4: {
       [defaultTheme.breakpoints.only('xs')]: {
         fontSize: 24
@@ -21,6 +31,9 @@ const theme = createTheme({
       [defaultTheme.breakpoints.only('xl')]: {
         fontSize: 40
       }
+    },
+    subtitle1: {
+      color: '#00000090'
     }
   },
   palette: {
@@ -65,14 +78,6 @@ const theme = createTheme({
     // divider: '#E7EBEF'
   },
   components: {
-    MuiLink: {
-      styleOverrides: {
-        root: {
-          cursor: 'pointer',
-          fontFamily: 'Raleway, sans-serif'
-        }
-      }
-    },
     MuiAppBar: {
       styleOverrides: {
         root: {

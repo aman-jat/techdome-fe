@@ -35,8 +35,8 @@ const Login = () => {
   }
 
   return (
-    <Stack gap={2} px={8} py={10} border="4px solid #28407D80" sx={{ backgroundColor: '#28407D10' }} borderRadius={2}>
-      <Typography ml={-2}>Login</Typography>
+    <>
+      <Typography ml={{ xs: 0, sm: -2 }}>Login</Typography>
       <TextField
         name="email"
         value={formik.values.email}
@@ -68,7 +68,7 @@ const Login = () => {
       <Button onClick={navigateToRegister} disabled={loading} variant="outlined">
         REGISTER
       </Button>
-    </Stack>
+    </>
   )
 }
 

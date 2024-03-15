@@ -1,4 +1,4 @@
-import { Button, Stack } from '@mui/material'
+import { Button, Stack, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
 import api from '../../../core/api'
 import { showSnackbar } from '../../../core/lib/utils'
@@ -29,34 +29,34 @@ const Loans = () => {
 
   return (
     <Stack>
-      <Stack alignSelf="center" width={{ xs: 400, sm: 500, md: 800, lg: 1000 }}>
+      <Stack alignSelf="center" width={{ xs: 350, sm: 500, md: 800, lg: 1000 }}>
         {loans == null && loading && <Loader />}
-        <table>
-          <tr>
-            {/* <th>Id</th> */}
-            <th>Amount</th>
-            <th>ROI</th>
-            <th>Tenure</th>
-            <th>Status</th>
-            <th>Action</th>
-          </tr>
-          {reversedLoans.map((loan) => {
-            return (
-              <tr key={loan.id}>
-                {/* <td>{loan.id}</td> */}
-                <td>{loan.principalAmount}</td>
-                <td>{loan.interestRate}</td>
-                <td>{loan.tenure}</td>
-                <td>{loan.status}</td>
-                <td style={{}}>
-                  <Button onClick={() => navigate(`/loans/${loan.id}`)} variant="text">
-                    View
-                  </Button>
-                </td>
-              </tr>
-            )
-          })}
-        </table>
+        {loans?.length ? (
+          <table>
+            <tr>
+              <th>Amount</th>
+              <th>Tenure</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+            {reversedLoans.map((loan) => {
+              return (
+                <tr key={loan.id}>
+                  <td>{loan.principalAmount}</td>
+                  <td>{loan.tenure}</td>
+                  <td>{loan.status}</td>
+                  <td style={{}}>
+                    <Button onClick={() => navigate(`/loans/${loan.id}`)} variant="text">
+                      View
+                    </Button>
+                  </td>
+                </tr>
+              )
+            })}
+          </table>
+        ) : (
+          <Typography>No loans found</Typography>
+        )}
       </Stack>
     </Stack>
   )

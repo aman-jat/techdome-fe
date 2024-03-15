@@ -24,7 +24,7 @@ const ajax = async function (
       data: undefined,
       withCredentials: true
     }
-
+    console.log('token-request', localStorage.getItem('token'))
     if (data && Object.keys(data).length > 0) {
       if (method === 'GET') config.params = data
       else config.data = data
@@ -33,6 +33,7 @@ const ajax = async function (
     resp = resp.data
     if (resp.hasOwnProperty('token')) {
       localStorage.setItem('token', resp.token)
+      console.log('token-response', resp.token)
       resp = resp.member
     }
     if (dispatch) setTimeout(() => store.dispatch({ type: `${dispatch}`, payload: resp }), 0)

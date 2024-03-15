@@ -1,4 +1,4 @@
-import { AppBar, Avatar, IconButton, Menu, MenuItem, Stack, Toolbar, Typography } from '@mui/material'
+import { AppBar, Avatar, IconButton, Menu, MenuItem, Stack, Toolbar, Typography, useMediaQuery } from '@mui/material'
 import LightLogo from '../../../assets/logo-light.svg'
 import { useState } from 'react'
 import api from '../../api'
@@ -6,12 +6,15 @@ import { showSnackbar } from '../../lib/utils'
 import Loader from '../../components/loader'
 import { useNavigate } from 'react-router-dom'
 import { useAppSelector } from '../../redux/store'
+import theme from '../../styles/theme'
 
 const Header = () => {
   const navigate = useNavigate()
   const user = useAppSelector((state) => state.user)
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const [loading, setLoading] = useState(false)
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
+
   const open = Boolean(anchorEl)
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget)
@@ -21,7 +24,10 @@ const Header = () => {
   }
 
   const handleViewLoans = () => {
-    navigate('loans')
+    const url = window.location.href
+    const parts = url.split('/')
+    const lastWord = parts[parts.length - 1]
+    lastWord !== 'loans' && navigate('loans')
     handleClose()
   }
 
@@ -44,11 +50,18 @@ const Header = () => {
     <AppBar position="static" className="app-bar" variant="elevation" elevation={4}>
       <Toolbar variant="dense">
         {loading && <Loader />}
-        <Stack p={2} width="100%" direction="row" justifyContent="space-between">
-          <img onClick={() => navigate('/')} style={{ cursor: 'pointer' }} src={LightLogo} width={100}></img>
+        <Stack py={2} px={{ xs: 0, sm: 2 }} width="100%" direction="row" justifyContent="space-between">
+          <img
+            onClick={() => navigate('/')}
+            style={{ cursor: 'pointer' }}
+            src={LightLogo}
+            width={isSmallScreen ? 150 : 100}
+          ></img>
           {user && (
-            <Stack alignItems="center" direction="row" gap={2}>
-              <Typography color="white">{user.role}</Typography>
+            <Stack alignItems="center" direction="row">
+              <Typography variant="body2" color="white">
+                {user.role}
+              </Typography>
               <IconButton onClick={handleClick}>
                 <Avatar>{user.name.charAt(0)}</Avatar>
               </IconButton>

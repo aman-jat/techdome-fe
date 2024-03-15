@@ -10,9 +10,10 @@ import { useAppSelector } from './core/redux/store'
 import { USER_ROLE } from './core/types/types'
 function App() {
   const user = useAppSelector((state) => state.user)
-
+  const token = localStorage.getItem('token')
   const { loading, error } = useAsync(() => {
     if (!user) {
+      console.log('token', token)
       return api.auth.getMember()
     } else {
       return Promise.reject()
@@ -23,8 +24,8 @@ function App() {
     <Suspense fallback={<Loader />}>
       {loading && <Loader />}
       <Layout>
-        {!loading && !error && user && user.role === USER_ROLE.BORROWER && <BorrowerRoutes />}
-        {!loading && !error && user && user.role === USER_ROLE.LENDER && <LenderRoutes />}
+        {!loading && !error && !!token && user && user.role === USER_ROLE.BORROWER && <BorrowerRoutes />}
+        {!loading && !error && !!token && user && user.role === USER_ROLE.LENDER && <LenderRoutes />}
         {!loading && !user && <UnauthorizedPage />}
       </Layout>
     </Suspense>

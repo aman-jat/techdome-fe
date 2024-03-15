@@ -42,7 +42,7 @@ const Register = () => {
   }
 
   return (
-    <Stack gap={2} px={8} py={10} border="4px solid #28407D80" sx={{ backgroundColor: '#28407D10' }} borderRadius={2}>
+    <>
       <Typography ml={-2}>Register</Typography>
       <TextField
         name="name"
@@ -95,7 +95,7 @@ const Register = () => {
       <Button onClick={navigateToLogin} disabled={loading} variant="outlined">
         LOGIN
       </Button>
-    </Stack>
+    </>
   )
 }
 

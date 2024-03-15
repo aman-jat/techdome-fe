@@ -18,7 +18,8 @@ const auth = {
   },
   logout: async () => {
     const win = window as any
-    ;['user', 'loans'].forEach((type) => {
+    const states = ['user', 'loans']
+    states.forEach((type) => {
       store.dispatch({ type: `${type}/clear` })
     })
     await ajax('auth/logout', { dispatch: 'user/clear' })

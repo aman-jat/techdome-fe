@@ -11,7 +11,7 @@ const ApplyForLoan = () => {
   const [repayments, setRepayments] = useState<{ id: number; emiAmount: number; due_date: Date }[]>([])
   const navigate = useNavigate()
   const formik = useFormik({
-    initialValues: { amount: 0, tenure: 0 },
+    initialValues: { amount: '', tenure: '' },
     validationSchema: yup.object().shape({
       amount: yup.number().min(1, 'Amount can not be less than 1').required('Loan amount is required'),
       tenure: yup.number().min(1, 'Tenure can not be less than 1').required('Tenure is required')
@@ -19,7 +19,7 @@ const ApplyForLoan = () => {
     onSubmit: async ({ amount, tenure }) => {
       try {
         setLoading(true)
-        await api.loan.create({ amount, tenure })
+        await api.loan.create({ amount: +amount, tenure: +tenure })
         showSnackbar('Applied Successfully', { severity: 'info' })
         navigate('/success')
       } catch (error) {
@@ -33,7 +33,8 @@ const ApplyForLoan = () => {
 
   const calculateRepayments = () => {
     const INTEREST_RATE = 0
-    const { amount, tenure } = formik.values
+    const amount = +formik.values.amount
+    const tenure = +formik.values.tenure
 
     const simpleInterest = parseFloat(((amount * INTEREST_RATE * tenure * 7) / 36500).toFixed(2))
     const totalPayableAmount = amount + simpleInterest
@@ -56,7 +57,7 @@ const ApplyForLoan = () => {
   }
 
   return (
-    <Stack px={4} py={8} alignSelf="center" width={{ xs: '100%', lg: 1000 }}>
+    <Stack px={{ xs: 0, sm: 4 }} py={8} alignSelf="center" width={{ xs: '100%', lg: 1000 }}>
       <Grid container>
         <Grid item xs={12} sm={6} lg={6}>
           <Stack>

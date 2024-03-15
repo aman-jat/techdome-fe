@@ -1,4 +1,4 @@
-import { Button, CircularProgress, Grid, Stack, Typography } from '@mui/material'
+import { Button, CircularProgress, Grid, Stack, Typography, useMediaQuery } from '@mui/material'
 import { useEffect, useState } from 'react'
 import api from '../../../core/api'
 import { formatDate, showSnackbar } from '../../../core/lib/utils'
@@ -7,10 +7,12 @@ import { useParams } from 'react-router-dom'
 import PaymentDialog from './payment-dailog'
 import { useAppSelector } from '../../../core/redux/store'
 import { USER_ROLE } from '../../../core/types/types'
+import theme from '../../../core/styles/theme'
 
 const Loan = () => {
   const loans = useAppSelector((state) => state.loans)
   const user = useAppSelector((state) => state?.user)
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
 
   const [loading, setLoading] = useState(false)
   const [aprvLoading, setAprvLoading] = useState(false)
@@ -106,7 +108,7 @@ const Loan = () => {
   }
 
   return (
-    <Stack px={4} py={8} alignSelf="center" width={{ xs: '100%', lg: 1000 }}>
+    <Stack py={{ xs: 2, sm: 8 }} alignSelf="center" width={{ xs: '100%', lg: 1000 }}>
       <Grid container>
         <Grid item xs={12} sm={6} lg={6}>
           <Stack gap={2}>
@@ -114,7 +116,7 @@ const Loan = () => {
               Loan Details
             </Typography>
 
-            <table style={{ margin: '8px 40px', border: '1px solid black' }}>
+            <table style={{ margin: `8px ${isSmallScreen ? 10 : 40}px`, border: '1px solid black' }}>
               {data.map((d) => {
                 return <Row key={d.key} label={d.key} value={d.value} />
               })}
@@ -139,7 +141,7 @@ const Loan = () => {
         </Grid>
 
         <Grid item xs={12} sm={6} lg={6}>
-          <Stack px={{ sm: 2, md: 8, lg: 8 }} height="100%" justifyContent="center">
+          <Stack px={{ sm: 2, md: 8, lg: 8 }} my={{ xs: 2, sm: 0 }} height="100%" justifyContent="center">
             <Typography variant="h4">EMIs</Typography>
             {loan.status === 'PENDING' && user.role === USER_ROLE.BORROWER && (
               <Typography color="grey" fontSize={12}>
@@ -149,7 +151,9 @@ const Loan = () => {
             )}
 
             <Stack py={2} px={{ md: 2, lg: 2 }} gap={2}>
-              {!loan.repayments.length && <Typography>Kindly await approval to access further details. </Typography>}
+              {!loan.repayments.length && (
+                <Typography variant="subtitle1">Kindly await approval to access further details. </Typography>
+              )}
               {loan.repayments.map((r, i) => {
                 const amount = r.status === 'PAID' ? r.emiAmount : r.remainingAmount
                 return (
@@ -166,10 +170,10 @@ const Loan = () => {
                     }}
                     key={r.id}
                   >
-                    <Typography>{i + 1}</Typography>
-                    <Typography>{amount}</Typography>
-                    <Typography>{formatDate(r.due_date)}</Typography>
-                    <Typography>{r.status}</Typography>
+                    <td>{i + 1}</td>
+                    <td>{amount}</td>
+                    <td>{formatDate(r.due_date)}</td>
+                    <td>{r.status}</td>
                   </Stack>
                 )
               })}
